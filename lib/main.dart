@@ -45,7 +45,6 @@ class MyHomePage extends StatelessWidget {
         children: [
           Text('A random AWESOME idea:'),
           WordCard(pair: pair),
-
           ElevatedButton(
             onPressed: () {
               appState.getNext();
@@ -68,6 +67,9 @@ class WordCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(pair.asLowerCase);
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Text(pair.asLowerCase),
+    );
   }
 }
