@@ -111,14 +111,16 @@ class Actions extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Row(mainAxisSize: MainAxisSize.min, children: [
-      ElevatedButton(
+      ElevatedButton.icon(
         onPressed: () {
           appState.toggleFavorite();
         },
         style: ElevatedButton.styleFrom(
             backgroundColor:
                 appState.isFavorite() ? theme.primaryColor : theme.canvasColor),
-        child: Text('Like',
+        icon: Icon(Icons.favorite,
+            color: appState.isFavorite() ? Colors.white : theme.primaryColor),
+        label: Text('Like',
             style: TextStyle(
                 color:
                     appState.isFavorite() ? Colors.white : theme.primaryColor)),
