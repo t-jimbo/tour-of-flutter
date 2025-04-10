@@ -42,6 +42,10 @@ class MyAppState extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  bool isFavorite() {
+    return favorites.contains(current);
+  }
 }
 
 class MyHomePage extends StatelessWidget {
@@ -57,12 +61,7 @@ class MyHomePage extends StatelessWidget {
           children: [
             WordCard(pair: pair),
             SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                appState.getNext();
-              },
-              child: Text('Next'),
-            ),
+            Actions(appState: appState),
           ],
         ),
       ),
@@ -96,5 +95,41 @@ class WordCard extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class Actions extends StatelessWidget {
+  const Actions({
+    super.key,
+    required this.appState,
+  });
+
+  final MyAppState appState;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Row(mainAxisSize: MainAxisSize.min, children: [
+      ElevatedButton(
+        onPressed: () {
+          appState.toggleFavorite();
+        },
+        style: ElevatedButton.styleFrom(
+            backgroundColor:
+                appState.isFavorite() ? theme.primaryColor : theme.canvasColor),
+        child: Text('Like',
+            style: TextStyle(
+                color:
+                    appState.isFavorite() ? Colors.white : theme.primaryColor)),
+      ),
+      SizedBox(width: 24),
+      ElevatedButton(
+        onPressed: () {
+          appState.getNext();
+        },
+        child: Text('Next'),
+      ),
+    ]);
   }
 }
