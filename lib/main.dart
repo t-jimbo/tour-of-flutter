@@ -70,42 +70,46 @@ class _MyHomePageState extends State<MyHomePage> {
         throw UnimplementedError("no widget is defined for selected index");
     }
 
-    return Scaffold(
-      body: Row(
-        children: [
-          Container(
-            color: Colors.white,
-            child: SafeArea(
-              child: NavigationRail(
-                backgroundColor: Colors.white,
-                extended: false,
-                destinations: [
-                  NavigationRailDestination(
-                    icon: Icon(Icons.home),
-                    label: Text('Home'),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Scaffold(
+          body: Row(
+            children: [
+              Container(
+                color: Colors.white,
+                child: SafeArea(
+                  child: NavigationRail(
+                    backgroundColor: Colors.white,
+                    extended: constraints.maxWidth >= 600,
+                    destinations: [
+                      NavigationRailDestination(
+                        icon: Icon(Icons.home),
+                        label: Text('Home'),
+                      ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.favorite),
+                        label: Text('Favorites'),
+                      ),
+                    ],
+                    selectedIndex: selectedIndex,
+                    onDestinationSelected: (value) {
+                      setState(() {
+                        selectedIndex = value;
+                      });
+                    },
                   ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.favorite),
-                    label: Text('Favorites'),
-                  ),
-                ],
-                selectedIndex: selectedIndex,
-                onDestinationSelected: (value) {
-                  setState(() {
-                    selectedIndex = value;
-                  });
-                },
+                ),
               ),
-            ),
+              Expanded(
+                child: Container(
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                  child: page,
+                ),
+              ),
+            ],
           ),
-          Expanded(
-            child: Container(
-              color: Theme.of(context).colorScheme.primaryContainer,
-              child: page,
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
