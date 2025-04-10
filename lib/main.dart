@@ -64,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = GeneratorPage();
         break;
       case 1:
-        page = Placeholder();
+        page = FavoritesPage();
         break;
       default:
         throw UnimplementedError("no widget is defined for selected index");
@@ -199,5 +199,29 @@ class Actions extends StatelessWidget {
         child: Text('Next'),
       ),
     ]);
+  }
+}
+
+class FavoritesPage extends StatelessWidget {
+  @override
+  Widget build(context) {
+    var appState = context.watch<MyAppState>();
+    final padding = MediaQuery.of(context).padding;
+
+    return Scaffold(
+        body: Center(
+            child: ListView(
+                padding: EdgeInsets.only(
+                  top: padding.top,
+                  left: padding.left,
+                  right: padding.right,
+                  bottom: padding.bottom,
+                ),
+                children: appState.favorites.map((pair) {
+                  return ListTile(
+                    leading: Icon(Icons.favorite),
+                    title: Text(pair.asLowerCase),
+                  );
+                }).toList())));
   }
 }
